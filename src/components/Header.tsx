@@ -26,7 +26,7 @@ export function Header() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
-              CollabBoard
+              Realtime Whiteboard
             </h1>
           </div>
           <div className="flex items-center gap-4">

@@ -1,17 +1,10 @@
-"use client";
-import dynamic from "next/dynamic";
-import { useTheme } from "next-themes";
+import WhiteboardList from "@/components/WhiteBoardLists";
 
-const TldrawEditor = dynamic(() => import("../components/TldrawEditor"), {
-  loading: () => <div>Loading editor...</div>,
-  ssr: false,
-});
 
 export default function Home() {
-  const { theme } = useTheme();
   return (
-    <div>
-      <TldrawEditor key={theme} isDarkMode={theme === "dark"} />
-    </div>
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <WhiteboardList />
+    </main>
   );
 }

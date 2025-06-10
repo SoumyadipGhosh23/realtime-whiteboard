@@ -3,7 +3,15 @@ import { Tldraw } from "tldraw";
 import "tldraw/tldraw.css";
 import { useEffect, useState } from "react";
 
-export default function TldrawEditor({ isDarkMode }: { isDarkMode: boolean }) {
+export default function TldrawEditor({
+  isDarkMode,
+}: {
+  isDarkMode: boolean;
+  whiteboardId: string;
+  initialData: any;
+  isReadOnly: boolean;
+  onSave?: (content: any) => Promise<void>;
+}) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -11,11 +19,11 @@ export default function TldrawEditor({ isDarkMode }: { isDarkMode: boolean }) {
   }, []);
 
   if (!mounted) {
-    return null; 
+    return null;
   }
 
   return (
-    <div style={{ position: "fixed", inset: 0, marginTop: "3.75rem" }} >
+    <div style={{ position: "fixed", inset: 0, marginTop: "3.75rem" }}>
       <Tldraw inferDarkMode={isDarkMode} />
     </div>
   );

@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Whiteboard {
+  id          String   @id @default(cuid())
+  name        String
+  content     Json?    // TLDraw data
+  status      Status   @default(DRAFT)
+  shareId     String   @unique @default(cuid()) // For public sharing
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String   // Clerk user ID
+  
+  comments    Comment[]
+
+  @@map("whiteboards")
+}
+
+model Comment {
+  id            String     @id @default(cuid())
+  content       String
+  x             Float      // X coordinate on canvas
+  y             Float      // Y coordinate on canvas
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  userId        String     // Clerk user ID
+  userName      String     // Cache user name for display
+  userAvatar    String?    // Cache user avatar
+  
+  whiteboard    Whiteboard @relation(fields: [whiteboardId], references: [id], onDelete: Cascade)
+  whiteboardId  String
+
+  @@map("comments")
+}
+
+enum Status {
+  DRAFT
+  PUBLISHED
+}
