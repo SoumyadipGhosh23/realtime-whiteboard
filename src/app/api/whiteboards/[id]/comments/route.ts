@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 // POST /api/whiteboards/[id]/comments - Add comment to whiteboard
 export async function POST(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const { userId } = await auth();
@@ -21,7 +21,7 @@ export async function POST(
             return NextResponse.json({ error: 'User not found' }, { status: 401 });
         }
 
-        const { id: whiteboardId } = params;
+        const { id: whiteboardId } = await params;
         const body = await request.json();
         const { content, x, y } = body;
 
@@ -71,11 +71,11 @@ export async function POST(
 // GET /api/whiteboards/[id]/comments - Get comments for whiteboard
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{id : string}> }
 ) {
     try {
         const { userId } = await auth();
-        const { id: whiteboardId } = params;
+        const { id: whiteboardId } = await params;
 
         // Check if whiteboard exists and user has access
         const whiteboard = await prisma.whiteboard.findUnique({

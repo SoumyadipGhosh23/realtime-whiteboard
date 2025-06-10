@@ -91,7 +91,7 @@ export async function PUT(
 // DELETE /api/whiteboards/[id] - Delete whiteboard
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const { userId } = await auth();
@@ -100,7 +100,7 @@ export async function DELETE(
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { id } = params;
+        const { id } = await params;
 
         // Check if whiteboard exists and user owns it
         const existingWhiteboard = await prisma.whiteboard.findUnique({
