@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
-import { useAuth, useClerk, useUser } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 import { useParams, useRouter } from "next/navigation";
 import { Whiteboard } from "@/types/whiteboard";
 
@@ -21,7 +21,6 @@ const EnhancedTldrawEditor = dynamic(
 
 export default function WhiteboardEditorPage({}) {
   const { theme } = useTheme();
-  const { isSignedIn } = useUser();
   const { userId, isLoaded } = useAuth();
   const router = useRouter();
   const [whiteboard, setWhiteboard] = useState<Whiteboard | null>(null);
@@ -132,16 +131,17 @@ export default function WhiteboardEditorPage({}) {
     await navigator.clipboard.writeText(shareUrl);
     alert("Share link copied to clipboard!");
   };
-  const { redirectToSignIn } = useClerk();
 
+  console.log(whiteboard);
   useEffect(() => {
-    if (!isSignedIn) {
-      redirectToSignIn({
-        redirectUrl: "/",
-      });
-      return;
+    if (!userId && isLoaded) {
+      router.push("/");
+    } else if (whiteboard?.userId) {
+      if (whiteboard?.userId !== userId && isLoaded) {
+        router.push("/");
+      }
     }
-  }, [isSignedIn, redirectToSignIn]);
+  }, [userId, isLoaded, router, whiteboard]);
 
   if (loading) {
     return (

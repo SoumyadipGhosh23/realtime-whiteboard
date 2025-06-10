@@ -41,6 +41,7 @@ export async function GET(
 }
 
 // PUT /api/whiteboards/[id] - Update whiteboard
+// PUT /api/whiteboards/[id] - Update whiteboard
 export async function PUT(
     request: NextRequest,
     { params }: { params: { id: string } }
@@ -71,7 +72,10 @@ export async function PUT(
 
         const updateData: any = {};
         if (name !== undefined) updateData.name = name.trim();
-        if (content !== undefined) updateData.content = content;
+        if (content !== undefined) {
+            // Store the Tldraw content as JSON
+            updateData.content = JSON.stringify(content);
+        }
         if (status !== undefined) updateData.status = status;
 
         const whiteboard = await prisma.whiteboard.update({
