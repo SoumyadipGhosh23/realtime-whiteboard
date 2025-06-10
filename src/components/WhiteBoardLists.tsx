@@ -150,22 +150,23 @@ export default function WhiteboardList() {
 
       {/* Create dialog */}
       {showCreateDialog && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-full max-w-md">
-            <h2 className="text-xl font-bold mb-4">Create New Whiteboard</h2>
+        <div className="fixed inset-0 bg-black/50 dark:bg-white/10 flex items-center justify-center z-50">
+          <div className="bg-background p-6 rounded-lg w-full max-w-md border border-border shadow-lg">
+            <h2 className="text-xl font-bold text-foreground mb-4">
+              Create New Whiteboard
+            </h2>
             <input
               type="text"
               value={newWhiteboardName}
               onChange={(e) => setNewWhiteboardName(e.target.value)}
               placeholder="Enter whiteboard name"
-              className="w-full p-3 border rounded-lg mb-4"
-              onKeyPress={(e) => e.key === "Enter" && createWhiteboard()}
+              className="w-full p-3 border border-input rounded-lg mb-4 bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
             />
             <div className="flex gap-2">
               <button
                 onClick={createWhiteboard}
                 disabled={creating || !newWhiteboardName.trim()}
-                className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                className="flex-1 bg-primary text-primary-foreground py-2 rounded-lg hover:bg-primary/90 disabled:opacity-50 transition-colors"
               >
                 {creating ? "Creating..." : "Create"}
               </button>
@@ -174,7 +175,7 @@ export default function WhiteboardList() {
                   setShowCreateDialog(false);
                   setNewWhiteboardName("");
                 }}
-                className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400"
+                className="flex-1 bg-secondary text-secondary-foreground py-2 rounded-lg hover:bg-secondary/80 transition-colors"
               >
                 Cancel
               </button>
