@@ -47,7 +47,6 @@ export default function TldrawEditor({
           // Load initial data if provided
           if (initialData) {
             try {
-              // Handle both string and object formats
               const parsedContent =
                 typeof initialData === "string"
                   ? JSON.parse(initialData)
