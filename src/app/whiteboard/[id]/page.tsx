@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Whiteboard } from "@/types/whiteboard";
 
 const EnhancedTldrawEditor = dynamic(
@@ -20,9 +20,6 @@ const EnhancedTldrawEditor = dynamic(
 );
 
 export default function WhiteboardEditorPage({
-  params,
-}: {
-  params: { id: string };
 }) {
   const { theme } = useTheme();
   const { userId, isLoaded } = useAuth();
@@ -31,16 +28,18 @@ export default function WhiteboardEditorPage({
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const parameters = useParams()
+  const id = parameters.id;
 
   useEffect(() => {
     if (isLoaded) {
       fetchWhiteboard();
     }
-  }, [params.id, isLoaded]);
+  }, [id, isLoaded]);
 
   const fetchWhiteboard = async () => {
     try {
-      const response = await fetch(`/api/whiteboards/${params.id}`);
+      const response = await fetch(`/api/whiteboards/${id}`);
 
       if (!response.ok) {
         if (response.status === 401) {
@@ -73,7 +72,7 @@ export default function WhiteboardEditorPage({
 
     setSaving(true);
     try {
-      const response = await fetch(`/api/whiteboards/${params.id}`, {
+      const response = await fetch(`/api/whiteboards/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -102,7 +101,7 @@ export default function WhiteboardEditorPage({
     const newStatus = whiteboard.status === "DRAFT" ? "PUBLISHED" : "DRAFT";
 
     try {
-      const response = await fetch(`/api/whiteboards/${params.id}`, {
+      const response = await fetch(`/api/whiteboards/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -174,7 +173,7 @@ export default function WhiteboardEditorPage({
   const canEdit = isOwner;
 
   return (
-    <div className="h-screen">
+    <div  style={{marginTop: "0.25rem"}}>
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 border-b px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">

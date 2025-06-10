@@ -8,7 +8,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { Button } from "./ui/button";
-import { Moon, Sun } from "lucide-react";
+import {  Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
   DropdownMenu,
@@ -17,15 +17,17 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
+
 export function Header() {
   const { setTheme } = useTheme();
+  
 
   return (
     <header className="bg-background/80 backdrop-blur-md border-b fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
+            <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent cursor-pointer">
               Realtime Whiteboard
             </h1>
           </div>

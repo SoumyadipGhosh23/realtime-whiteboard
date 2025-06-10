@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function TldrawEditor({
   isDarkMode,
+  whiteboardId
 }: {
   isDarkMode: boolean;
   whiteboardId: string;
@@ -23,8 +24,8 @@ export default function TldrawEditor({
   }
 
   return (
-    <div style={{ position: "fixed", inset: 0, marginTop: "3.75rem" }}>
-      <Tldraw inferDarkMode={isDarkMode} />
+    <div style={{ position: "fixed", inset: 0, marginTop: "9rem" }}>
+      <Tldraw inferDarkMode={isDarkMode} persistenceKey={whiteboardId} />
     </div>
   );
 }

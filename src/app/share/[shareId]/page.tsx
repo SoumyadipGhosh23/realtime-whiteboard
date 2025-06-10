@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import { Whiteboard } from "@/types/whiteboard";
+import { useParams } from "next/navigation";
 
 const EnhancedTldrawEditor = dynamic(
   () => import("@/components/TldrawEditor"),
@@ -17,19 +18,21 @@ const EnhancedTldrawEditor = dynamic(
   }
 );
 
-export default function SharePage({ params }: { params: { shareId: string } }) {
+export default function SharePage() {
   const { theme } = useTheme();
   const [whiteboard, setWhiteboard] = useState<Whiteboard | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const params = useParams();
+  const shareId = params.shareId;
 
   useEffect(() => {
     fetchSharedWhiteboard();
-  }, [params.shareId]);
+  }, [shareId]);
 
   const fetchSharedWhiteboard = async () => {
     try {
-      const response = await fetch(`/api/share/${params.shareId}`);
+      const response = await fetch(`/api/share/${shareId}`);
 
       if (!response.ok) {
         if (response.status === 404) {
@@ -77,7 +80,7 @@ export default function SharePage({ params }: { params: { shareId: string } }) {
   }
 
   return (
-    <div className="h-screen">
+    <div >
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 border-b px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">

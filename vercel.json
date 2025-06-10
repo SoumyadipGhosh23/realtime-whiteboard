@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "src/db/schema.prisma",
+            "use": "@vercel/static",
+            "config": {
+                "distDir": "src/db"
+            }
+        },
+        {
+            "src": "package.json",
+            "use": "@vercel/next"
+        }
+    ],
+    "build": {
+        "env": {
+            "PRISMA_SCHEMA_PATH": "./src/db/schema.prisma"
+        }
+    }
+}

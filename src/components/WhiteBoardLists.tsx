@@ -212,7 +212,7 @@ export default function WhiteboardList() {
               <p>
                 Updated: {new Date(whiteboard.updatedAt).toLocaleDateString()}
               </p>
-              <p>Comments: {whiteboard._count.comments}</p>
+              <p>Comments: {whiteboard._count?.comments}</p>
             </div>
 
             <div className="flex gap-2 flex-wrap">
