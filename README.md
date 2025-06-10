@@ -7,7 +7,7 @@ A collaborative whiteboard app built with Next.js, tldraw, neon db, prisma and C
 1. **Clone and install**
    ```bash
    git clone git@github.com:SoumyadipGhosh23/realtime-whiteboard.git
-   cd whiteboard2
+   cd realtime-whiteboard
    npm install
    ```
 
