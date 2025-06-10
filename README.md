@@ -31,7 +31,7 @@ A collaborative whiteboard app built with Next.js, tldraw, neon db, prisma and C
    npm run dev
    ```
 
-Open [http://localhost:3000](http://localhost:3000) and start drawing!
+Open [http://localhost:3000](http://localhost:3000)
 
 ## What you'll need
 
