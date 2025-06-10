@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useClerk, useUser } from "@clerk/nextjs";
 import { useParams, useRouter } from "next/navigation";
 import { Whiteboard } from "@/types/whiteboard";
 
@@ -19,16 +19,16 @@ const EnhancedTldrawEditor = dynamic(
   }
 );
 
-export default function WhiteboardEditorPage({
-}) {
+export default function WhiteboardEditorPage({}) {
   const { theme } = useTheme();
+  const { isSignedIn } = useUser();
   const { userId, isLoaded } = useAuth();
   const router = useRouter();
   const [whiteboard, setWhiteboard] = useState<Whiteboard | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const parameters = useParams()
+  const parameters = useParams();
   const id = parameters.id;
 
   useEffect(() => {
@@ -132,6 +132,16 @@ export default function WhiteboardEditorPage({
     await navigator.clipboard.writeText(shareUrl);
     alert("Share link copied to clipboard!");
   };
+  const { redirectToSignIn } = useClerk();
+
+  useEffect(() => {
+    if (!isSignedIn) {
+      redirectToSignIn({
+        redirectUrl: "/",
+      });
+      return;
+    }
+  }, [isSignedIn, redirectToSignIn]);
 
   if (loading) {
     return (
@@ -173,7 +183,7 @@ export default function WhiteboardEditorPage({
   const canEdit = isOwner;
 
   return (
-    <div  style={{marginTop: "0.25rem"}}>
+    <div style={{ marginTop: "0.25rem" }}>
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 border-b px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
