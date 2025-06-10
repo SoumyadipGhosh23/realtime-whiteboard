@@ -7,11 +7,11 @@ const prisma = new PrismaClient();
 // GET /api/whiteboards/[id] - Get specific whiteboard
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }>; }
 ) {
     try {
         const { userId } = await auth();
-        const { id } = params;
+        const { id } = await params;
 
         const whiteboard = await prisma.whiteboard.findUnique({
             where: { id },
@@ -40,11 +40,9 @@ export async function GET(
     }
 }
 
-// PUT /api/whiteboards/[id] - Update whiteboard
-// PUT /api/whiteboards/[id] - Update whiteboard
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }>; }
 ) {
     try {
         const { userId } = await auth();
@@ -53,7 +51,7 @@ export async function PUT(
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { id } = params;
+        const { id } = await params;
         const body = await request.json();
         const { name, content, status } = body;
 

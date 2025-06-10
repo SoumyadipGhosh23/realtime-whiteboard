@@ -132,7 +132,7 @@ export default function WhiteboardEditorPage({}) {
     alert("Share link copied to clipboard!");
   };
 
-  console.log(whiteboard);
+
   useEffect(() => {
     if (!userId && isLoaded) {
       router.push("/");
