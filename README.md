@@ -1,12 +1,12 @@
 # Whiteboard
 
-A collaborative whiteboard app built with Next.js, tldraw, and Clerk authentication.
+A collaborative whiteboard app built with Next.js, tldraw, neon db, prisma and Clerk authentication.
 
 ## Getting Started
 
 1. **Clone and install**
    ```bash
-   git clone <your-repo>
+   git clone git@github.com:SoumyadipGhosh23/realtime-whiteboard.git
    cd whiteboard2
    npm install
    ```
@@ -37,5 +37,3 @@ Open [http://localhost:3000](http://localhost:3000) and start drawing!
 
 - A [Clerk](https://clerk.com) account for authentication
 - A [Neon](https://neon.tech) database for data storage
-
-That's it! Happy whiteboarding 🎨
